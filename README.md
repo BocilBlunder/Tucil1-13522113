@@ -7,7 +7,7 @@
 * [How to Run The Program](#how-to-run-the-program)
 
 ## **Program Description**
-Cyberpunk 2077 Breach Protocol" is a hacking minigame within the Cyberpunk 2077 video game. The Breach Protocol minigame involves hacking into networks and systems by solving puzzles (code) and executing sequences of commands. This program is created to help player solve the code by using a brute-force algorithm to find all possible sequences with maximum reward.
+Cyberpunk 2077 Breach Protocol is a hacking minigame within the Cyberpunk 2077 video game. The Breach Protocol minigame involves hacking into networks and systems by solving puzzles (code) and executing sequences of commands. This program is created to help player solve the code by using a brute-force algorithm to find all possible sequences with maximum reward.
 
 ## **Required Program**
 To compile this program, you will need to install **python** and some libraries
