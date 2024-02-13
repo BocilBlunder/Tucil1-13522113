@@ -16,5 +16,5 @@ To compile this program, you will need to install **python** and some libraries
 1. Clone this repository <br>
 `$ git clone https://github.com/BocilBlunder/tucil1-13522113.git`
 2. Change the directory to the 'src' folder <br>
-3. Run the program <br>
+3. Run the program (main.py) <br>
 4. All test file must be added in the 'test' folder <br>
