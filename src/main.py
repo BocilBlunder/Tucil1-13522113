@@ -1,6 +1,7 @@
 import time
 import sys
 import random
+import os
 import numpy as np
 
 class Coordinate:
@@ -30,7 +31,6 @@ def readInputFile(file_path):
                 buffer_size = int(lines[0])
                 matrix_col, matrix_row = map(int, lines[1].split())
                 matrix = [line.split() for line in lines[2:2+matrix_row]]
-
                 check1 = True
                 check2 = True
                 for i in range (len(matrix)) :
@@ -39,7 +39,6 @@ def readInputFile(file_path):
                             check1 = False
                         if (not(matrix[i][j].isalnum())) :
                             check2 = False
-
                 if(check1 == False) :
                     print("Silahkan run ulang program kembali karena token tidak terdiri dari 2 karakter")
                     sys.exit()
@@ -52,17 +51,21 @@ def readInputFile(file_path):
                 for _ in range(num_sequences):
                     sequence = lines[current_line].split()
                     current_line += 1
-
                     sequence_reward = int(lines[current_line])
                     current_line += 1
-
-                    sequence_instance = Sequence(sequence, sequence_reward)
-                    sequences.append(sequence_instance)
+                    is_valid_sequence = all(len(item) == 2 and item.isalnum() for item in sequence)
+                    if is_valid_sequence:
+                        sequence_instance = Sequence(sequence, sequence_reward)
+                        sequences.append(sequence_instance)
+                    else:
+                        print("Silahkan run ulang program kembali karena token dalam sekuens salah")
+                        sys.exit()
 
             return buffer_size, matrix, sequences
-
         except FileNotFoundError:
-            file_path = input("File tidak ditemukan. Silahkan input ulang nama file: ")
+            file_name = input("File tidak ditemukan. Silahkan input ulang nama file: ")
+            file_path = os.path.join("test", file_name)
+
 
 
 def readInputTerminal():
@@ -152,11 +155,13 @@ def countReward(buff):
             rewards += sequences[i].reward
     return rewards
 
+
 def hasPass(coord, buff):
     for i in range(len(buff)):
         if coord.row == buff[i].row and coord.col == buff[i].col:
             return True
     return False
+
 
 def findRoute(coord, buff, vertical):
     global max_reward
@@ -223,7 +228,6 @@ print("| |_) |  _ <| |___ / ___ \ |___|  _  |    |  __/|  _ <| |_| || || |_| | |
 print("|____/|_| \_\_____/_/   \_\____|_| |_|    |_|   |_| \_\\___/ |_| \___/ \____\___/|_____|")
 
 print ("\n")
-
 print("1. Masukkan melalui file .txt")
 print("2. Masukkan melalui CLI")
 
@@ -240,6 +244,11 @@ if program == "1":
 elif program == "2":
     buffer_size, matrix, sequences = readInputTerminal()
 
+for i in range (len(sequences)) :
+    if (len(sequences[i].pattern)) < 2 :
+        print("Silahkan run ulang program kembali karena sekuens reward kurang dari 2 token")
+        sys.exit()
+
 print(f'Ukuran Buffer: {buffer_size}')
 print(f'Ukuran Kolom Matrix: {len(matrix[0])}')
 print(f'Ukuran Baris Matrix: {len(matrix)}')
@@ -253,12 +262,6 @@ print(f'Jumlah sekuens: {len(sequences)}')
 print("Sekuens: ")
 for i in range (len(sequences)):
     print(f'sekuen {sequences[i].pattern} memiliki reward {sequences[i].reward}')
-
-
-for i in range (len(sequences)) :
-    if (len(sequences[i].pattern)) < 2 :
-        print("Silahkan run ulang program kembali karena sekuens reward kurang dari 2 token")
-        sys.exit()
 
 
 start_time = time.time()
